@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+  <title>{{title}}</title>
+  <meta charset="utf-8"/>
+  <meta name="keywords" content="{{keywords}}"/>
+  <meta name="description" content="{{description}}"/>
+  <link rel="icon"
+        href="https://gw.alipayobjects.com/zos/rmsportal/bdhEVKFJozSLBZntTeUg.png"
+        type="image/x-icon"/>
+  <link rel="shortcut icon"
+        href="https://gw.alipayobjects.com/zos/rmsportal/bdhEVKFJozSLBZntTeUg.png"
+        type="image/x-icon"/>
+  <script>
+    window._context = {{ context | safe }};
+  </script>
+  <script src="//g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
+  <link rel="stylesheet"
+        href="https://gw.alipayobjects.com/os/chair-script/skylark/common.2700f82d.chunk.css">
+  <link rel="stylesheet"
+        href="https://gw.alipayobjects.com/os/chair-script/skylark/newLogin.128fb3cd.css">
+  <script>
+    'use strict';
+
+    setTimeout(function () {
+      function qsStringify (obj) {
+        return Object.keys(obj).reduce(function (a, b) {
+          a.push(b + '=' + obj[b]);
+          return a;
+        }, []).join('&');
+      }
+
+      var callbackURL = '' + location.origin + window._context.callbackURL;
+      var appId = window._context.key;
+
+      var query = qsStringify({
+        appid: appId,
+        response_type: 'code',
+        scope: 'snsapi_login',
+        state: 'STATE',
+        redirect_uri: callbackURL
+      });
+      var goto = encodeURIComponent('https://oapi.dingtalk.com/connect/oauth2/sns_authorize?' + query);
+      window.DDLogin({
+        id: 'login_container',
+        goto: goto,
+        style: 'border:none;background-color:#FFFFFF;',
+        width: '365',
+        height: '400'
+      });
+
+      var hanndleMessage = function hanndleMessage (event) {
+        var origin = event.origin;
+        if (origin === 'https://login.dingtalk.com') {
+          var loginTmpCode = event.data;
+          redirectToCallbackUrl(loginTmpCode);
+        }
+      };
+
+      var redirectToCallbackUrl = function redirectToCallbackUrl (loginTmpCode) {
+        var _window$_context = window._context,
+          appId = _window$_context.key,
+          callbackPath = _window$_context.callbackURL;
+
+        var query = qsStringify({
+          appid: appId,
+          response_type: 'code',
+          scope: 'snsapi_login',
+          state: 'STATE',
+          redirect_uri: callbackURL,
+          loginTmpCode: loginTmpCode
+        });
+        location.href = 'https://oapi.dingtalk.com/connect/oauth2/sns_authorize?' + query;
+      };
+
+      if (typeof window.addEventListener !== 'undefined') {
+        window.addEventListener('message', hanndleMessage, false);
+      } else if (typeof window.attachEvent !== 'undefined') {
+        window.attachEvent('onmessage', hanndleMessage);
+      }
+    }, 16)
+  </script>
+  <style>
+    #container {
+      background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+      background-repeat: no-repeat;
+      background-position: center 110px;
+      background-size: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="ReactApp">
+  <div>
+    <div class="loading" id="lark-loading">
+      <div class="loading-bar"></div>
+    </div>
+    <div class="lark page-account lark-login">
+      <div class="main-wrapper" id="container">
+        <div class="layout-container">
+          <div class="lark-form">
+            <div class="lark-form-main">
+              <div class="lark-form-logo"><a href="/"><img
+                  src="{{ logo }}"
+                  alt="Chameleon"></a></div>
+              <div class="lark-form-content form-pro">
+                <div class="account-slogon"><h2 class="account-slogon-main">
+                  {{ slogan }}</h2>
+                  <p class="account-slogon-subhead"><span>Open Dingtalk and scan it</span>
+                  </p>
+                </div>
+                <div class="thirdpart-login">
+                  <div id="login_container"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
