@@ -1,0 +1,87 @@
+{
+  "name": "egg-passport-dingtalk",
+  "version": "1.0.0",
+  "description": "dingtalk passport plugin for egg",
+  "eggPlugin": {
+    "name": "passportDingtalk",
+    "dependencies": [
+      "passport"
+    ]
+  },
+  "egg": {
+    "typescript": true
+  },
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin",
+    "egg-passport",
+    "passport-dingtalk"
+  ],
+  "dependencies": {
+    "debug": "^4.1.1",
+    "nunjucks": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/assert": "^1.4.2",
+    "@types/debug": "^4.1.4",
+    "@types/mocha": "^5.1.0",
+    "@types/node": "^9.6.5",
+    "@types/nunjucks": "^3.1.1",
+    "@types/supertest": "^2.0.7",
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg": "^2.16.0",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "egg-passport": "^2.0.1",
+    "egg-ts-helper": "^1.6.0",
+    "rimraf": "^2.6.3",
+    "supertest": "^3.0.0",
+    "tslib": "^1.10.0",
+    "tslint": "^5.9.1",
+    "tslint-config-egg": "^1.0.0",
+    "typescript": "^3.5.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
+    "test-local": "egg-bin test -r egg-ts-helper/register",
+    "cov": "egg-bin cov -r egg-ts-helper/register",
+    "lint": "tslint .",
+    "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
+    "pkgfiles": "egg-bin pkgfiles",
+    "autod": "autod",
+    "ts": "rimraf app/**/*.js lib/**/*.js && ets && tsc",
+    "prepublish": "npm run ts",
+    "postpublish": "node scripts/published.js"
+  },
+  "typings": "index.d.ts",
+  "files": [
+    "app",
+    "lib",
+    "config",
+    "app.js",
+    "index.d.ts"
+  ],
+  "ci": {
+    "type": "travis",
+    "os": {
+      "travis": "linux"
+    },
+    "version": "8, 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eggjs-community/egg-passport-dingtalk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eggjs-community/egg-passport-dingtalk/issues"
+  },
+  "homepage": "https://github.com/eggjs-community/egg-passport-dingtalk#readme",
+  "author": "xiekw2010",
+  "license": "MIT"
+}
